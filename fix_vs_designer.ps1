@@ -66,6 +66,7 @@ if (Test-Path $vsCachePath) {
 
 
 # Get most recently used projects
+$directory = "$env:USERPROFILE\source\repos"  # Mofify if different
 $projects = Get-ChildItem -Path $directory -Recurse -Depth 1 -Directory | ForEach-Object {
     # Check if the folder contains a .csproj file
     $csprojFile = Get-ChildItem -Path $_.FullName -Filter *.csproj -ErrorAction SilentlyContinue
@@ -90,7 +91,7 @@ $projects = Get-ChildItem -Path $directory -Recurse -Depth 1 -Directory | ForEac
 } | Sort-Object LastWriteTime -Descending | Select-Object -First 10
 
 # Prompt for project selection
-Write-Host "10 most recent projects:" -ForegroundColor Cyan
+Write-Host "10 most recent projects:" -ForegroundColor White
 for ($i = 0; $i -lt $projects.Count; $i++) {
     Write-Host "[$($i)]" -NoNewline -ForegroundColor White
     Write-Host " $($projects[$i].SolutionName)" -NoNewline -ForegroundColor Magenta
